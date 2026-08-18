@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+Disallow: /olayori-central.html
+Sitemap: https://tidalcrestgroup.com/sitemap.xml
