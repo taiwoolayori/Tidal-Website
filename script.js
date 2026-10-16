@@ -24,7 +24,17 @@ if(button&&nav){
   });
 
   document.addEventListener('keydown',event=>{
-    if(event.key==='Escape') closeMenu();
+    if(event.key==='Escape'&&nav.classList.contains('open')){
+      const focusWasInside=nav.contains(document.activeElement);
+      closeMenu();
+      if(focusWasInside) button.focus();
+    }
+  });
+
+  document.addEventListener('pointerdown',event=>{
+    if(nav.classList.contains('open')&&!nav.contains(event.target)&&!button.contains(event.target)){
+      closeMenu();
+    }
   });
 
   window.addEventListener('resize',()=>{
