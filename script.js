@@ -38,7 +38,7 @@ if(button&&nav){
   });
 
   window.addEventListener('resize',()=>{
-    if(window.innerWidth>900) closeMenu();
+    if(window.innerWidth>1200) closeMenu();
   });
 }
 
