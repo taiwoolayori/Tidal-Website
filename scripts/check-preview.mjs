@@ -1,8 +1,11 @@
 // Offline audit for the staging directory. Run after prepare-preview.mjs.
 import { existsSync, readFileSync, readdirSync } from 'node:fs';
-import { extname, join, normalize } from 'node:path';
+import { join, normalize } from 'node:path';
 const root='staging-public';
+const expectedPages=['index.html','about.html','group.html','businesses.html','developments.html','agro.html','farms.html','governance.html','foundation.html','careers.html','contact.html'];
 const pages=readdirSync(root).filter(x=>x.endsWith('.html'));
+for (const page of expectedPages) if(!pages.includes(page)) throw new Error('Missing expected page: '+page);
+for (const page of pages) if(!expectedPages.includes(page)) throw new Error('Unexpected staged page: '+page);
 let checks=0;
 const failures=[];
 function checkReference(source, target) {
@@ -11,7 +14,7 @@ function checkReference(source, target) {
   const relative=value.startsWith('/')?value.slice(1):join(source==='styles.css'||source==='lean.css'||source==='cinematic.css'?'':source.includes('/')?source.substring(0,source.lastIndexOf('/')):'',value);
   const resolved=normalize(relative);
   checks++;
-  if(resolved.startsWith('..') || !existsSync(join(root,resolved))) failures.push(source+' -> '+target);
+  if(resolved==='..' || resolved.startsWith('../') || !existsSync(join(root,resolved))) failures.push(source+' -> '+target);
 }
 for(const page of pages){
   const html=readFileSync(join(root,page),'utf8');
