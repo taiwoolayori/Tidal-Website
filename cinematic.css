@@ -17,3 +17,13 @@
 @media(max-width:1000px){.home-v2-inner,.thesis-grid,.governance-grid-v2{grid-template-columns:1fr}.crest-stage{min-height:330px}.hero-crest-v2{width:min(280px,54vw)}.thesis-points{grid-template-columns:1fr}.value-rail{grid-template-columns:repeat(2,1fr)}.value-step:nth-child(2){border-right:0}.value-step:nth-child(-n+2){border-bottom:1px solid rgba(201,168,95,.18)}}
 @media(max-width:700px){.cinematic-home .home-v2{min-height:auto}.home-v2-inner{padding:68px 0 86px;gap:28px}.hero-title-v2{font-size:clamp(2.8rem,13vw,4.3rem)}.hero-intro-v2{font-size:.95rem}.crest-stage{min-height:230px;order:-1}.hero-crest-v2{width:min(190px,48vw)}.crest-orbit{width:68%}.scroll-cue{display:none}.story-section{padding:78px 0}.section-title-v2{font-size:clamp(2.1rem,10vw,3.4rem)}.group-panel{min-height:420px}.group-panel-content{padding:28px;display:block}.group-panel-arrow{margin-top:20px}.value-rail{grid-template-columns:1fr}.value-step{border-right:0;border-bottom:1px solid rgba(201,168,95,.18)}.value-step:last-child{border-bottom:0}.horizon{min-height:70vh;background-attachment:scroll}.horizon-line{font-size:clamp(2.3rem,11vw,4rem)}.closing-v2{padding:80px 0 70px}}
 @media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none}.group-panel::before,.hero-crest-v2{transition:none!important}.horizon{background-attachment:scroll}}
+
+/* Enterprise expansion — additive, approved website modernization branch */
+.emerging-enterprises{background:linear-gradient(155deg,#0b0a08,#17130e 55%,#0b0a08)}
+.emerging-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:38px}
+.emerging-card{border:1px solid rgba(201,168,95,.26);background:linear-gradient(130deg,rgba(201,168,95,.075),rgba(0,0,0,.12));padding:30px;min-width:0}
+.emerging-card .mini-label{color:var(--gold2);letter-spacing:.14em;text-transform:uppercase;font-size:.7rem}
+.emerging-card h3{font:500 clamp(1.35rem,2vw,2rem)/1.22 'Cinzel',Georgia,serif;color:#f0e6d2;margin:16px 0 12px}
+.emerging-card p,.emerging-cta p{color:#c7beb0;line-height:1.75;margin:0}
+.emerging-cta{display:flex;gap:24px;align-items:center;justify-content:space-between;margin-top:30px;flex-wrap:wrap}
+@media(max-width:700px){.emerging-grid{grid-template-columns:1fr}.emerging-card{padding:23px}}
