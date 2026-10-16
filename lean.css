@@ -34,7 +34,7 @@
 body.dialog-open{overflow:hidden}
 
 @media(max-width:1100px){.group-experience{grid-template-columns:1fr;gap:34px}}
-@media(max-width:900px){
+@media(max-width:1200px){
   .nav{max-height:calc(100vh - 78px);overflow:auto;gap:0;padding:10px 24px 20px}
   .nav a{width:100%;padding:14px 0;font-size:.78rem}
   .nav .connect{width:auto;padding:12px 16px;margin-top:6px}
