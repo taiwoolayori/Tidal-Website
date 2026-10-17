@@ -5,7 +5,7 @@ import { once } from 'node:events';
 import { setTimeout as delay } from 'node:timers/promises';
 
 const server=spawn('python3',['-m','http.server','8765','--directory','staging-public'],{stdio:'ignore'});
-const pages=['index.html','group.html','businesses.html','developments.html','agro.html','farms.html','farm-poultry.html','farm-aquaculture.html','foundation.html','contact.html'];
+const pages=['index.html','group.html','businesses.html','developments.html','agro.html','farms.html','farm-poultry.html','farm-aquaculture.html','media.html','foundation.html','contact.html'];
 const failures=[];
 mkdirSync('browser-review',{recursive:true});
 let browser;
@@ -26,6 +26,11 @@ try {
       const r=await page.evaluate(()=>({scroll:document.documentElement.scrollWidth,client:document.documentElement.clientWidth,title:document.title,main:!!document.querySelector('main')}));
       if(r.scroll>r.client+3)failures.push(name+' '+file+' horizontal overflow '+r.scroll+'/'+r.client);
       if(!r.title||!r.main)failures.push(name+' '+file+' missing title/main');
+      if(file==='media.html'){
+        await page.waitForFunction(()=>!!window.TIDAL_PUBLIC_CONTENT);
+        if(await page.locator('[data-tidal-media] a').count()) failures.push(name+' unapproved media link visible');
+        if(await page.locator('[data-tidal-social] a').count()) failures.push(name+' unapproved social link visible');
+      }
       if(['index.html','group.html','businesses.html','farms.html'].includes(file)){
         const destinations=await page.locator('nav.footer-destinations a').count();
         if(destinations!==4)failures.push(name+' '+file+' expected 4 shared destination links, found '+destinations);
