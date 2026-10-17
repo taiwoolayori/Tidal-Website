@@ -47,6 +47,8 @@ jobs:
           path: browser-review/*.png
           if-no-files-found: warn
           retention-days: 7
+      - name: Install JSON Schema validator for contract tests
+        run: npm install --no-save --no-package-lock ajv@8.17.1 ajv-formats@3.0.1
       - name: Validate synthetic OFES publication contracts
         run: node contracts/ofes-publication/test-contract.mjs
       - name: Verify exclusion of production configuration
