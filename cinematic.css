@@ -53,3 +53,10 @@
 .cinematic-home .closing-v2 h2{font-size:clamp(2.8rem,5vw,5rem)}
 @media(max-width:1000px){.cinematic-home .origin-company-grid,.cinematic-home .origin-capabilities{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:700px){.cinematic-home .origin-company-grid,.cinematic-home .origin-capabilities{grid-template-columns:1fr}.cinematic-home .hero-title-v2{font-size:clamp(3rem,12vw,4.5rem)}.cinematic-home .origin-company img{height:205px}}
+
+/* A concise, accessible visual link between established activities and long-term ambition. */
+.cinematic-home .origin-progression{padding:82px 0;background:#100e0a;border-block:1px solid rgba(201,168,95,.22)}
+.cinematic-home .origin-progression-steps{list-style:none;counter-reset:steps;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;padding:0;margin:32px 0 0;background:rgba(201,168,95,.19);border:1px solid rgba(201,168,95,.19)}
+.cinematic-home .origin-progression-steps li{counter-increment:steps;background:#100e0a;padding:22px 14px;min-width:0;font:600 clamp(1.3rem,2vw,1.95rem)/1.08 'Cormorant Garamond',Georgia,serif}
+.cinematic-home .origin-progression-steps li::before{content:counter(steps,decimal-leading-zero);display:block;font:500 .65rem/1.5 Inter,Arial,sans-serif;color:var(--gold2);letter-spacing:.12em;margin-bottom:9px}
+@media(max-width:700px){.cinematic-home .origin-progression{padding:62px 0}.cinematic-home .origin-progression-steps{grid-template-columns:repeat(2,minmax(0,1fr))}}
