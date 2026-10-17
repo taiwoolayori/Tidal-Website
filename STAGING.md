@@ -9,3 +9,7 @@ This command uses a preview channel, never `hosting:channel:deploy live` or `fir
 No Firebase command should be run without verifying authenticated account, project permissions, channel target and explicit owner authorization for hosted staging.
 
 The staging allowlist also retains the existing Olayori Central policy URLs and historical redirect pages (`privacy.html`, `data-deletion.html`, `olayori-central.html`, `investments.html`, and `leadership.html`) to avoid breaking already-public URL routes during review. These pages are existing public website content, not a grant to publish new private OLAYORI information.
+
+## Automated non-deploying checks
+
+Draft PR changes are checked by `.github/workflows/staging-validation.yml` on GitHub-hosted Node.js 22. The workflow runs the offline staging preparation and validation with read-only repository permissions and does not authenticate to Firebase, publish the artifact, or deploy. A successful GitHub Actions result is evidence of static packaging/link checks only; it is not visual/browser acceptance. Confirm the actual workflow result before marking checks passed.
