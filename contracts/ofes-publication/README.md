@@ -39,3 +39,13 @@ Run `node contracts/ofes-publication/test-contract.mjs` to test mock export beha
 4. Agree public media URL host/rights policy and approved location granularity.
 5. Define immutable release checksum and deletion/rollback channel protocols.
 6. Complete security tests against real adapter in a private environment when integration is authorized.
+
+## v0.2 draft hardening status (2026-10-17)
+
+The website contract now includes an experimental `research` publication kind with output classification, review label and authors, conditional kind requirements, an Ajv Draft 2020-12 validator and synthetic exclusions for withdrawn/superseded releases. A restricted HTTPS asset-host pattern is defined for media URLs.
+
+**Not yet complete or production-safe:** verifying an actual OFES authorization decision (current tests use synthetic booleans), semantic content privacy scanning, independently approved public identity resolution, cross-version revision-conflict policy, approval-record custody, complete deterministic manifest generation, release removal from deployed static pages and assets, CDN cache invalidation, rollback execution, and legal/academic metadata validation.
+
+The website's standalone Research Publications page is `publications.html`. No live research paper, peer-review outcome or institutional partnership is implied by its presence. Research program records remain private in OFES. The site will consume only separately approved public research publication records once integration is authorized.
+
+The GitHub CI should be considered accepted only after a confirmed passing run at the latest SHA. These are contract tests, not an approval to publish.
