@@ -19,6 +19,19 @@ function checkReference(source, target) {
 for(const page of pages){
   const html=readFileSync(join(root,page),'utf8');
   for(const match of html.matchAll(/\b(?:href|src)="([^"]+)"/g)) checkReference(page,match[1]);
+  // Catch metadata regressions and ambiguous in-page navigation before browser QA.
+  const title=(html.match(/<title>([^<]+)<\/title>/i)||[])[1];
+  if(!title?.trim()) failures.push(page+' missing document title');
+  if(!/<html[^>]+lang="en"/i.test(html)) failures.push(page+' missing page language');
+  if(!/<meta[^>]+name="viewport"/i.test(html)) failures.push(page+' missing viewport metadata');
+  if(!/<meta[^>]+name="description"/i.test(html)) failures.push(page+' missing description metadata');
+  if(!/<link[^>]+rel="canonical"/i.test(html)) failures.push(page+' missing canonical URL');
+  if(!/<main(?:\s|>)/i.test(html)) failures.push(page+' missing main landmark');
+  const ids=[...html.matchAll(/\bid="([^"]+)"/g)].map(match=>match[1]);
+  if(new Set(ids).size!==ids.length) failures.push(page+' duplicates element ids');
+  const labels=[...html.matchAll(/aria-labelledby="([^"]+)"/g)].flatMap(match=>match[1].split(/\s+/));
+  for(const id of labels) if(!ids.includes(id)) failures.push(page+' unresolved aria-labelledby: '+id);
+  for(const anchor of html.matchAll(/href="#([^"]+)"/g)) if(!ids.includes(anchor[1])) failures.push(page+' unresolved fragment: '+anchor[1]);
   const nav=html.match(/<nav class="nav"[\s\S]*?<\/nav>/)?.[0]||'';
   if(!nav.includes('href="businesses.html"')) failures.push(page+' missing Businesses navigation');
 }
