@@ -93,6 +93,8 @@ function renderTidalPublicContent(){
   const data=window.TIDAL_PUBLIC_CONTENT;
   if(!data)return;
   const validUrl=url=>{try{const u=new URL(url);return u.protocol==='https:';}catch{return false;}};
+  const footer=document.querySelector('.footer .footer-center');
+  if(footer&&!footer.querySelector('[data-tidal-social]')){const social=document.createElement('nav');social.setAttribute('aria-label','Official social channels');social.dataset.tidalSocial='';footer.append(social);}
   const activeSocial=(data.social||[]).filter(x=>x.url&&validUrl(x.url));
   document.querySelectorAll('[data-tidal-social]').forEach(host=>{
     if(!activeSocial.length){host.hidden=true;return;}
