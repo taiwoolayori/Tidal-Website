@@ -69,3 +69,6 @@ body.dialog-open{overflow:hidden}
 
 /* Farm section journals */
 .journal-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:26px}.journal-grid .card{min-height:210px}.journal-subheading{font:600 1.35rem/1.25 'Cinzel',Georgia,serif;color:var(--gold2);margin:14px 0}.journal-link{display:inline-block;margin-top:12px;color:var(--gold2);font-size:.78rem;line-height:1.5;text-decoration:underline;text-underline-offset:4px}@media(max-width:760px){.journal-grid{grid-template-columns:1fr}}
+
+/* Prevent long contact email links from forcing mobile horizontal overflow. */
+.contact-grid{min-width:0}.contact-grid .card{min-width:0}.contact-grid .btn{max-width:100%;white-space:normal;overflow-wrap:anywhere;word-break:break-word}
