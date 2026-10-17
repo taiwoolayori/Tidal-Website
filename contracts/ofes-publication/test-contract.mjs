@@ -44,6 +44,22 @@ assert.ok(validate({schema_version:'0.2.0-draft',generated_at:'2026-10-17T00:00:
 assert.equal(exportPublic([{...research,public_research_ref:'public_unapproved'}]).releases.length,0);
 assert.equal(exportPublic([{...base,media:[{public_url:'file:///private/example',alt:'test'}]}]).releases.length,0);
 assert.equal(exportPublic([{...base,summary:'SYNTHETIC_RESTRICTED_SITE_LAYOUT'}]).releases.length,1,'Text privacy requires separately authorized human review and cannot be proven by schema');
+function validateRegistry(manifest, withdrawnIds=new Set()){
+ if(!validate(manifest))return false;
+ const ids=new Set(),pairs=new Set();
+ for(const r of manifest.releases){
+  const pair=r.publication_id+':'+r.revision;
+  if(ids.has(r.publication_id)||pairs.has(pair)||withdrawnIds.has(r.publication_id))return false;
+  ids.add(r.publication_id);pairs.add(pair);
+ }
+ return true;
+}
+assert.equal(validateRegistry({...published,releases:[base,base]}),false,'Duplicate ID rejected');
+assert.equal(validateRegistry(published,new Set([base.publication_id])),false,'Withdrawn ID blocked from regeneration');
+assert.equal(validateRegistry(published),true,'Valid current publication');
+assert.equal(exportPublic([{...base,status:'superseded'}]).releases.length,0,'Superseded release excluded');
+assert.equal(exportPublic([{...base,status:'withdrawn'}]).releases.length,0,'Withdrawn release excluded');
+rejected({...base,media:[{public_url:'javascript:alert(1)',alt:'Safe?'}]},'Unsafe URI rejected via schema media URL requirements once added');
 assert.deepEqual(exportPublic(candidates),exportPublic(candidates),'Deterministic ordering');
 assert.equal(exportPublic([]).releases.length,0);
 for(const term of ['SYNTHETIC_PRIVATE_CANONICAL_ID','SYNTHETIC_SECURITY_LAYOUT','SYNTHETIC_RESTRICTED_LOCATION']){
