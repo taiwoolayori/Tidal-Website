@@ -72,3 +72,9 @@ body.dialog-open{overflow:hidden}
 
 /* Prevent long contact email links from forcing mobile horizontal overflow. */
 .contact-grid{min-width:0}.contact-grid .card{min-width:0}.contact-grid .btn{max-width:100%;white-space:normal;overflow-wrap:anywhere;word-break:break-word}
+
+/* Shared navigation to public editorial and participation destinations. */
+.footer-destinations{display:flex;justify-content:center;flex-wrap:wrap;gap:10px 18px;margin-top:16px;padding-top:16px;border-top:1px solid rgba(201,168,95,.22)}
+.footer-destinations a{color:#ddd3c2;font-size:.71rem;line-height:1.5;letter-spacing:normal;text-transform:none;text-decoration:underline;text-underline-offset:4px}
+.footer-destinations a:hover,.footer-destinations a[aria-current="page"]{color:var(--gold2)}
+@media(max-width:900px){.footer-destinations{justify-content:flex-start}}
