@@ -1,26 +1,52 @@
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
+import Ajv2020 from 'ajv/dist/2020.js';
+import addFormats from 'ajv-formats';
 const root=new URL('.',import.meta.url);
-const candidates=JSON.parse(readFileSync(new URL('synthetic-candidates.json',root),'utf8'));
 const schema=JSON.parse(readFileSync(new URL('publication-manifest.schema.json',root),'utf8'));
+const candidates=JSON.parse(readFileSync(new URL('synthetic-candidates.json',root),'utf8'));
+const ajv=new Ajv2020({allErrors:true,strict:true});
+addFormats(ajv);
+const validate=ajv.compile(schema);
 const allowed=new Set(Object.keys(schema.$defs.release.properties));
-const required=schema.$defs.release.required;
-const types=new Set(schema.$defs.release.properties.kind.enum);
-const canPublish=r=>r.status==='published'&&r.facts_verified===true&&r.privacy_cleared===true&&r.rights_cleared===true&&r.authorization_confirmed===true&&Number.isInteger(r.revision)&&r.revision>0&&types.has(r.kind)&&typeof r.publication_id==='string'&&typeof r.title==='string'&&typeof r.summary==='string'&&typeof r.published_at==='string';
-const exportPublic=(items)=>({schema_version:schema.properties.schema_version.const,generated_at:'2026-10-17T00:00:00Z',releases:items.filter(canPublish).map(item=>Object.fromEntries(Object.entries(item).filter(([key])=>allowed.has(key))))});
-const result=exportPublic(candidates);
-assert.equal(result.releases.length,1,'Only the approved synthetic release may export');
-assert.equal(result.releases[0].publication_id,'pub_synthetic_public_01');
-for(const record of result.releases){
- for(const key of required)assert.ok(Object.hasOwn(record,key),'Missing required field '+key);
- for(const key of Object.keys(record))assert.ok(allowed.has(key),'Non-allowlisted field '+key);
- assert.equal(record.status,'published');
+const approvedRefs=new Set(['public_test-farm','public_test-research']);
+const rights=r=>r.facts_verified===true&&r.privacy_cleared===true&&r.rights_cleared===true&&r.authorization_confirmed===true;
+function acceptable(r){
+ if(r.status!=='published'||!rights(r))return false;
+ if(Object.keys(r).some(k=>!allowed.has(k)))return false;
+ if(r.public_project_ref&&!approvedRefs.has(r.public_project_ref))return false;
+ if(r.public_entity_ref&&!approvedRefs.has(r.public_entity_ref))return false;
+ if(r.public_research_ref&&!approvedRefs.has(r.public_research_ref))return false;
+ if(r.media?.some(x=>!/^https:\/\/(?:tidalcrestgroup\.com|media\.tidalcrestgroup\.com)\//.test(x.public_url)))return false;
+ return true;
 }
-for(const word of ['SYNTHETIC_PRIVATE_CANONICAL_ID','SYNTHETIC_SECURITY_LAYOUT','SYNTHETIC_RESTRICTED_LOCATION','pub_synthetic_withdrawn_03','pub_synthetic_superseded_04']){
- assert.equal(JSON.stringify(result).includes(word),false,'Restricted or inactive data leaked: '+word);
+function exportPublic(items){
+ const releases=items.filter(acceptable).sort((a,b)=>a.publication_id.localeCompare(b.publication_id));
+ return {schema_version:'0.2.0-draft',generated_at:'2026-10-17T00:00:00Z',releases};
 }
-assert.equal(result.releases.some(r=>r.status!=='published'),false);
-assert.equal(exportPublic([]).releases.length,0,'Empty release input must be safe');
-const malformed={...candidates[0],privacy_cleared:false};
-assert.equal(exportPublic([malformed]).releases.length,0,'Non-cleared records cannot publish');
-console.log('OFES contract synthetic compatibility tests passed: allowlist, lifecycle, rights/privacy/authorization, restricted fields, empty fallback.');
+const published=exportPublic(candidates);
+assert.equal(published.releases.length,1);
+assert.ok(validate(published),JSON.stringify(validate.errors));
+function rejected(record,description){
+ const manifest={...published,releases:[record]};
+ assert.equal(validate(manifest),false,description);
+}
+const base=candidates[0];
+rejected({...base,publication_id:undefined},'Missing required ID');
+rejected({...base,published_at:'not-a-date'},'Malformed timestamp');
+rejected({...base,publication_id:'INVALID'},'Invalid publication ID');
+rejected({...base,unknown_internal_field:'secret'},'Unexpected field');
+rejected({...base,kind:'research'},'Research fields required');
+rejected({...base,kind:'entity'},'Entity public reference required');
+rejected({...base,media:[{public_url:'https://tidalcrestgroup.com/public.png',alt:'',private_link:'hidden'}]},'Nested object restrictions');
+const research={...base,publication_id:'pub_synthetic_research_01',kind:'research',public_research_ref:'public_test-research',research_output_type:'technical-note',review_label:'not-peer-reviewed',authors:['Synthetic Researcher']};
+assert.ok(validate({schema_version:'0.2.0-draft',generated_at:'2026-10-17T00:00:00Z',releases:[research]}),JSON.stringify(validate.errors));
+assert.equal(exportPublic([{...research,public_research_ref:'public_unapproved'}]).releases.length,0);
+assert.equal(exportPublic([{...base,media:[{public_url:'file:///private/example',alt:'test'}]}]).releases.length,0);
+assert.equal(exportPublic([{...base,summary:'SYNTHETIC_RESTRICTED_SITE_LAYOUT'}]).releases.length,1,'Text privacy requires separately authorized human review and cannot be proven by schema');
+assert.deepEqual(exportPublic(candidates),exportPublic(candidates),'Deterministic ordering');
+assert.equal(exportPublic([]).releases.length,0);
+for(const term of ['SYNTHETIC_PRIVATE_CANONICAL_ID','SYNTHETIC_SECURITY_LAYOUT','SYNTHETIC_RESTRICTED_LOCATION']){
+ assert.ok(!JSON.stringify(published).includes(term));
+}
+console.log('OFES draft v0.2 schema tests passed; content safety, revision conflict and takedown are NOT production validated.');
