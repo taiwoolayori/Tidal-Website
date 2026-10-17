@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://tidalcrestgroup.com/contracts/publication-manifest/0.1.0-draft",
-  "title": "Tidal Crest approved public publication manifest (draft)",
+  "$id": "https://tidalcrestgroup.com/contracts/publication-manifest/0.2.0-draft",
+  "title": "Tidal Crest Public Publication Manifest v0.2 Draft",
   "type": "object",
   "additionalProperties": false,
   "required": [
@@ -11,7 +11,7 @@
   ],
   "properties": {
     "schema_version": {
-      "const": "0.1.0-draft"
+      "const": "0.2.0-draft"
     },
     "generated_at": {
       "type": "string",
@@ -53,7 +53,8 @@
             "farm-journal",
             "media",
             "challenge",
-            "foundation"
+            "foundation",
+            "research"
           ]
         },
         "title": {
@@ -130,8 +131,106 @@
         "approved_status_label": {
           "type": "string",
           "maxLength": 100
+        },
+        "public_research_ref": {
+          "type": "string",
+          "pattern": "^public_[a-z0-9-]{4,64}$"
+        },
+        "research_output_type": {
+          "enum": [
+            "working-paper",
+            "technical-note",
+            "field-report",
+            "scholarly-article",
+            "conference-paper",
+            "research-brief",
+            "dataset",
+            "institutional-report"
+          ]
+        },
+        "review_label": {
+          "enum": [
+            "not-peer-reviewed",
+            "internal-technical-review",
+            "independently-peer-reviewed"
+          ]
+        },
+        "authors": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 120
+          }
+        },
+        "citation": {
+          "type": "string",
+          "maxLength": 600
         }
-      }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "entity"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "public_entity_ref"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "project-update"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "public_project_ref"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "farm-journal"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "public_project_ref",
+              "chapter"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "research"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "public_research_ref",
+              "research_output_type",
+              "review_label",
+              "authors"
+            ]
+          }
+        }
+      ]
     }
   }
 }
