@@ -119,7 +119,7 @@
             "properties": {
               "public_url": {
                 "type": "string",
-                "format": "uri"
+                "pattern": "^https://(?:tidalcrestgroup\\.com|media\\.tidalcrestgroup\\.com)/[^\\s]*$"
               },
               "alt": {
                 "type": "string",
