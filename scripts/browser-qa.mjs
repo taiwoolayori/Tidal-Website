@@ -1,11 +1,13 @@
 import { chromium } from 'playwright';
 import { spawn } from 'node:child_process';
+import { mkdirSync } from 'node:fs';
 import { once } from 'node:events';
 import { setTimeout as delay } from 'node:timers/promises';
 
 const server=spawn('python3',['-m','http.server','8765','--directory','staging-public'],{stdio:'ignore'});
 const pages=['index.html','group.html','businesses.html','developments.html','agro.html','farms.html','farm-poultry.html','farm-aquaculture.html','foundation.html','contact.html'];
 const failures=[];
+mkdirSync('browser-review',{recursive:true});
 let browser;
 try {
   for(let i=0;i<30;i++){
@@ -24,7 +26,7 @@ try {
       const r=await page.evaluate(()=>({scroll:document.documentElement.scrollWidth,client:document.documentElement.clientWidth,title:document.title,main:!!document.querySelector('main')}));
       if(r.scroll>r.client+3)failures.push(name+' '+file+' horizontal overflow '+r.scroll+'/'+r.client);
       if(!r.title||!r.main)failures.push(name+' '+file+' missing title/main');
-      if(file==='index.html'||file==='farms.html') await page.screenshot({path:'/tmp/tidal-'+name+'-'+file+'.png',fullPage:true});
+      if(file==='index.html'||file==='farms.html') await page.screenshot({path:'browser-review/tidal-'+name+'-'+file+'.png',fullPage:true});
     }
     await page.goto('http://127.0.0.1:8765/index.html');
     const menu=page.locator('button.menu');
