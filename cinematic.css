@@ -60,3 +60,9 @@
 .cinematic-home .origin-progression-steps li{counter-increment:steps;background:#100e0a;padding:22px 14px;min-width:0;font:600 clamp(1.3rem,2vw,1.95rem)/1.08 'Cormorant Garamond',Georgia,serif}
 .cinematic-home .origin-progression-steps li::before{content:counter(steps,decimal-leading-zero);display:block;font:500 .65rem/1.5 Inter,Arial,sans-serif;color:var(--gold2);letter-spacing:.12em;margin-bottom:9px}
 @media(max-width:700px){.cinematic-home .origin-progression{padding:62px 0}.cinematic-home .origin-progression-steps{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+/* Protect Cormorant descenders and keep the origin hero legible. */
+.cinematic-home .story-origin .hero-title-v2{line-height:1.12;padding-bottom:.1em;overflow:visible}
+.cinematic-home .story-origin .hero-title-v2 span{padding-bottom:.05em}
+.cinematic-home .origin-company:focus-visible{outline:3px solid var(--gold2);outline-offset:3px}
+@media(max-width:700px){.cinematic-home .story-origin .hero-title-v2{line-height:1.13}}
