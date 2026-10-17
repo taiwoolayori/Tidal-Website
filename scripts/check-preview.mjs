@@ -2,7 +2,7 @@
 import { existsSync, readFileSync, readdirSync } from 'node:fs';
 import { join, normalize } from 'node:path';
 const root='staging-public';
-const expectedPages=['index.html','about.html','group.html','businesses.html','projects.html','media.html','publications.html','developments.html','agro.html','farms.html','farm-poultry.html','farm-livestock.html','farm-aquaculture.html','farm-crops.html','farm-resources.html','farm-markets.html','farm-learning.html','farm-visitors.html','governance.html','foundation.html','careers.html','work-with-us.html','contact.html','privacy.html','data-deletion.html','olayori-central.html','investments.html','leadership.html'];
+const expectedPages=['index.html','about.html','group.html','businesses.html','projects.html','opportunities.html','media.html','publications.html','developments.html','agro.html','farms.html','farm-poultry.html','farm-livestock.html','farm-aquaculture.html','farm-crops.html','farm-resources.html','farm-markets.html','farm-learning.html','farm-visitors.html','governance.html','foundation.html','careers.html','work-with-us.html','contact.html','privacy.html','data-deletion.html','olayori-central.html','investments.html','leadership.html'];
 const pages=readdirSync(root).filter(x=>x.endsWith('.html'));
 for (const page of expectedPages) if(!pages.includes(page)) throw new Error('Missing expected page: '+page);
 for (const page of pages) if(!expectedPages.includes(page)) throw new Error('Unexpected staged page: '+page);
