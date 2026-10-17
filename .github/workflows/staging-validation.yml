@@ -10,6 +10,7 @@ on:
       - '**/*.mjs'
       - 'assets/**'
       - 'scripts/**'
+      - 'contracts/**'
       - 'firebase.preview.json'
       - '.github/workflows/staging-validation.yml'
   workflow_dispatch:
@@ -46,6 +47,8 @@ jobs:
           path: browser-review/*.png
           if-no-files-found: warn
           retention-days: 7
+      - name: Validate synthetic OFES publication contracts
+        run: node contracts/ofes-publication/test-contract.mjs
       - name: Verify exclusion of production configuration
         shell: bash
         run: |
