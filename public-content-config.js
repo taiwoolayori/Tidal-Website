@@ -6,7 +6,12 @@ window.TIDAL_PUBLIC_CONTENT = {
     {label:"Instagram", url:null},
     {label:"Facebook", url:null},
     {label:"LinkedIn", url:null},
-    {label:"TikTok", url:null}
+    {label:"TikTok", url:null},
+    {label:"Threads", url:null},
+    {label:"X (Twitter)", url:null},
+    {label:"Bluesky", url:null},
+    {label:"WhatsApp Channels", url:null},
+    {label:"Pinterest", url:null}
   ],
   // Approved releases only, newest first. No examples are shown as real content.
   releases: []
