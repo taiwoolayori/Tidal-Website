@@ -46,7 +46,6 @@ try {
     if(await businessesGroup.locator('.nav-submenu a[href="agro.html"]').count()!==1)failures.push(name+' Agro dropdown target missing');
     await dropdown.press('Escape');
     if(await dropdown.getAttribute('aria-expanded')!=='false')failures.push(name+' Escape failed to close dropdown');
-    if(viewport.width<=1200)await page.locator('button.menu').click();
 
     const menu=page.locator('button.menu');
     if(viewport.width<=1200){
