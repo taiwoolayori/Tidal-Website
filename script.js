@@ -64,3 +64,26 @@ principleDialogs.forEach(dialog=>{
   });
   dialog.addEventListener('close',()=>document.body.classList.remove('dialog-open'));
 });
+
+
+// Shared public destination directory. Preserves approved primary navigation and legacy URLs.
+const publicFooter=document.querySelector('.footer .footer-center');
+if(publicFooter && document.querySelector('nav.nav[aria-label="Primary"]')){
+  const links=[
+    ['Projects & Innovation','projects.html'],
+    ['Media & Journal','media.html'],
+    ['Publications & Journals','publications.html'],
+    ['Work With Us','work-with-us.html']
+  ];
+  const directory=document.createElement('nav');
+  directory.className='footer-destinations';
+  directory.setAttribute('aria-label','Explore Tidal Crest');
+  for(const [label,url] of links){
+    const anchor=document.createElement('a');
+    anchor.href=url;
+    anchor.textContent=label;
+    if(location.pathname.endsWith('/'+url)) anchor.setAttribute('aria-current','page');
+    directory.append(anchor);
+  }
+  publicFooter.append(directory);
+}
