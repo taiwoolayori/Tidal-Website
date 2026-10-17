@@ -38,6 +38,16 @@ try {
       if(['index.html','group.html','businesses.html','farms.html'].includes(file)) await page.screenshot({path:'browser-review/tidal-'+name+'-'+file+'.png',fullPage:true});
     }
     await page.goto('http://127.0.0.1:8765/index.html');
+    const businessesGroup=page.locator('.nav-group').filter({has:page.locator('a[href="businesses.html"]')}).first();
+    const dropdown=businessesGroup.locator('.nav-subtoggle');
+    if(viewport.width<=1200)await page.locator('button.menu').click();
+    await dropdown.click();
+    if(await dropdown.getAttribute('aria-expanded')!=='true')failures.push(name+' Businesses dropdown failed to open');
+    if(await businessesGroup.locator('.nav-submenu a[href="agro.html"]').count()!==1)failures.push(name+' Agro dropdown target missing');
+    await dropdown.press('Escape');
+    if(await dropdown.getAttribute('aria-expanded')!=='false')failures.push(name+' Escape failed to close dropdown');
+    if(viewport.width<=1200)await page.locator('button.menu').click();
+
     const menu=page.locator('button.menu');
     if(viewport.width<=1200){
       await menu.click();
