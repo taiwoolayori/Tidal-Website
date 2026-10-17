@@ -26,6 +26,10 @@ try {
       const r=await page.evaluate(()=>({scroll:document.documentElement.scrollWidth,client:document.documentElement.clientWidth,title:document.title,main:!!document.querySelector('main')}));
       if(r.scroll>r.client+3)failures.push(name+' '+file+' horizontal overflow '+r.scroll+'/'+r.client);
       if(!r.title||!r.main)failures.push(name+' '+file+' missing title/main');
+      if(['index.html','group.html','businesses.html','farms.html'].includes(file)){
+        const destinations=await page.locator('nav.footer-destinations a').count();
+        if(destinations!==4)failures.push(name+' '+file+' expected 4 shared destination links, found '+destinations);
+      }
       if(['index.html','group.html','businesses.html','farms.html'].includes(file)) await page.screenshot({path:'browser-review/tidal-'+name+'-'+file+'.png',fullPage:true});
     }
     await page.goto('http://127.0.0.1:8765/index.html');
