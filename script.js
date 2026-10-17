@@ -42,6 +42,33 @@ if(button&&nav){
   });
 }
 
+// Accessible navigation groups. Existing top-level links remain working destinations.
+const primaryNav=document.querySelector('.nav[aria-label="Primary"]');
+if(primaryNav){
+ const groups={
+  'businesses.html':[['Developments','developments.html'],['Agro','agro.html'],['Farms','farms.html'],['Foods and future capabilities','businesses.html']],
+  'farms.html':[['Estate Journey','farms.html#the-journey'],['Poultry','farm-poultry.html'],['Livestock','farm-livestock.html'],['Aquaculture','farm-aquaculture.html'],['Crops and Orchards','farm-crops.html'],['Resources','farm-resources.html'],['Learning and Research','farm-learning.html']],
+  'group.html':[['Projects and Innovation','projects.html'],['Project Calls and Announcements','opportunities.html'],['Research Publications','publications.html'],['Media and Journal','media.html'],['Work With Us','work-with-us.html']]
+ };
+ for(const link of [...primaryNav.querySelectorAll(':scope > a')]){
+  const options=groups[link.getAttribute('href')];
+  if(!options)continue;
+  const group=document.createElement('div');group.className='nav-group';
+  link.before(group);group.append(link);
+  const button=document.createElement('button');button.className='nav-subtoggle';button.type='button';
+  button.setAttribute('aria-label','Show '+link.textContent+' pages');
+  button.setAttribute('aria-expanded','false');button.textContent='⌄';
+  const menu=document.createElement('div');menu.className='nav-submenu';menu.hidden=true;
+  for(const [label,href] of options){const a=document.createElement('a');a.href=href;a.textContent=label;menu.append(a);}
+  group.append(button,menu);
+  const close=()=>{menu.hidden=true;button.setAttribute('aria-expanded','false');group.classList.remove('expanded');};
+  button.addEventListener('click',()=>{const next=menu.hidden;primaryNav.querySelectorAll('.nav-group.expanded .nav-subtoggle').forEach(b=>{if(b!==button)b.click();});menu.hidden=!next;button.setAttribute('aria-expanded',String(next));group.classList.toggle('expanded',next);});
+  group.addEventListener('keydown',e=>{if(e.key==='Escape'&&!menu.hidden){close();button.focus();}});
+  document.addEventListener('pointerdown',e=>{if(!group.contains(e.target))close();});
+  primaryNav.addEventListener('click',e=>{if(e.target.closest('a'))close();});
+ }
+}
+
 const principleButtons=document.querySelectorAll('[data-principle]');
 const principleDialogs=document.querySelectorAll('.principle-dialog');
 
