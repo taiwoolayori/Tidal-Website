@@ -1,0 +1,46 @@
+name: Website staging validation
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - '**/*.html'
+      - '**/*.css'
+      - '**/*.js'
+      - '**/*.mjs'
+      - 'assets/**'
+      - 'scripts/**'
+      - 'firebase.preview.json'
+      - '.github/workflows/staging-validation.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  offline-staging:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out pull request source
+        uses: actions/checkout@v4
+      - name: Configure Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Build allowlisted review artifact
+        run: node scripts/prepare-preview.mjs
+      - name: Validate links, page metadata and assets
+        run: node scripts/check-preview.mjs
+      - name: Verify exclusion of production configuration
+        shell: bash
+        run: |
+          test ! -e staging-public/CNAME
+          test ! -e staging-public/firebase.json
+          test ! -e staging-public/.firebaserc
+          test ! -e staging-public/firebase.preview.json
+      - name: Report artifact inventory
+        run: |
+          echo "Staged HTML pages:"
+          find staging-public -maxdepth 1 -name '*.html' -type f | sort
+          echo "No Firebase deployment is performed by this workflow."
