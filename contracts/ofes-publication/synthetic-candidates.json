@@ -1,0 +1,81 @@
+[
+  {
+    "publication_id": "pub_synthetic_public_01",
+    "kind": "farm-journal",
+    "title": "Synthetic Farm Design Note",
+    "summary": "Fictional approved text for compatibility testing only.",
+    "revision": 2,
+    "status": "published",
+    "published_at": "2026-10-01T12:00:00Z",
+    "facts_verified": true,
+    "privacy_cleared": true,
+    "rights_cleared": true,
+    "authorization_confirmed": true,
+    "public_project_ref": "public_test-farm",
+    "chapter": "Design",
+    "media": []
+  },
+  {
+    "publication_id": "pub_synthetic_draft_02",
+    "kind": "project-update",
+    "title": "Private draft",
+    "summary": "Not for release",
+    "revision": 1,
+    "status": "draft",
+    "facts_verified": false,
+    "privacy_cleared": false,
+    "rights_cleared": false,
+    "authorization_confirmed": false,
+    "restricted_location": "SYNTHETIC_RESTRICTED_LOCATION"
+  },
+  {
+    "publication_id": "pub_synthetic_withdrawn_03",
+    "kind": "media",
+    "title": "Withdrawn release",
+    "summary": "No longer public",
+    "revision": 1,
+    "status": "withdrawn",
+    "facts_verified": true,
+    "privacy_cleared": true,
+    "rights_cleared": true,
+    "authorization_confirmed": true
+  },
+  {
+    "publication_id": "pub_synthetic_superseded_04",
+    "kind": "entity",
+    "title": "Old profile",
+    "summary": "Superseded",
+    "revision": 1,
+    "status": "superseded",
+    "facts_verified": true,
+    "privacy_cleared": true,
+    "rights_cleared": true,
+    "authorization_confirmed": true
+  },
+  {
+    "publication_id": "pub_synthetic_restricted_05",
+    "kind": "project-update",
+    "title": "Rejected secret",
+    "summary": "Private",
+    "revision": 1,
+    "status": "published",
+    "facts_verified": true,
+    "privacy_cleared": false,
+    "rights_cleared": true,
+    "authorization_confirmed": true,
+    "private_canonical_id": "SYNTHETIC_PRIVATE_CANONICAL_ID",
+    "security_layout": "SYNTHETIC_SECURITY_LAYOUT"
+  },
+  {
+    "publication_id": "pub_synthetic_unauthorized_06",
+    "kind": "foundation",
+    "title": "Awaiting approval",
+    "summary": "Private",
+    "revision": 1,
+    "status": "authorized",
+    "facts_verified": true,
+    "privacy_cleared": true,
+    "rights_cleared": true,
+    "authorization_confirmed": true
+  }
+]
