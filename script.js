@@ -87,3 +87,41 @@ if(publicFooter && document.querySelector('nav.nav[aria-label="Primary"]')){
   }
   publicFooter.append(directory);
 }
+
+// Optional public-only media and official social profiles, with safe empty state.
+function renderTidalPublicContent(){
+  const data=window.TIDAL_PUBLIC_CONTENT;
+  if(!data)return;
+  const validUrl=url=>{try{const u=new URL(url);return u.protocol==='https:';}catch{return false;}};
+  const activeSocial=(data.social||[]).filter(x=>x.url&&validUrl(x.url));
+  document.querySelectorAll('[data-tidal-social]').forEach(host=>{
+    if(!activeSocial.length){host.hidden=true;return;}
+    host.hidden=false;
+    const heading=document.createElement('h3');heading.textContent='Follow Tidal Crest';host.append(heading);
+    for(const item of activeSocial){const a=document.createElement('a');a.href=item.url;a.textContent=item.label;a.target='_blank';a.rel='noopener noreferrer';host.append(a);}
+  });
+  const releases=(data.releases||[]).filter(x=>x.status==='published'&&x.title&&validUrl(x.url));
+  document.querySelectorAll('[data-tidal-media]').forEach(host=>{
+    const type=host.getAttribute('data-tidal-media');
+    const scoped=releases.filter(x=>type==='all'||x.type===type).sort((a,b)=>(b.publishedAt||'').localeCompare(a.publishedAt||''));
+    if(!scoped.length){host.hidden=true;return;}
+    host.hidden=false;
+    for(const item of scoped){
+      const article=document.createElement('article');article.className='card tidal-release';
+      const h=document.createElement('h3');h.textContent=item.title;article.append(h);
+      if(item.summary){const p=document.createElement('p');p.textContent=item.summary;article.append(p);}
+      const link=document.createElement('a');link.href=item.url;link.target='_blank';link.rel='noopener noreferrer';link.textContent='View publication';article.append(link);
+      // No third-party embed is loaded until a visitor explicitly chooses to watch.
+      if(item.embedUrl&&item.type==='video'&&item.embedUrl.startsWith('https://www.youtube-nocookie.com/embed/')){
+        const button=document.createElement('button');button.type='button';button.textContent='Play video here';
+        button.addEventListener('click',()=>{const frame=document.createElement('iframe');frame.src=item.embedUrl;frame.title=item.title;frame.loading='lazy';frame.allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture';frame.allowFullscreen=true;button.replaceWith(frame);});
+        article.append(button);
+      }
+      host.append(article);
+    }
+  });
+}
+const tidalConfig=document.createElement('script');
+tidalConfig.src='public-content-config.js';
+tidalConfig.onload=renderTidalPublicContent;
+document.head.append(tidalConfig);
