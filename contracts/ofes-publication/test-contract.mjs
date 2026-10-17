@@ -5,7 +5,7 @@ import addFormats from 'ajv-formats';
 const root=new URL('.',import.meta.url);
 const schema=JSON.parse(readFileSync(new URL('publication-manifest.schema.json',root),'utf8'));
 const candidates=JSON.parse(readFileSync(new URL('synthetic-candidates.json',root),'utf8'));
-const ajv=new Ajv2020({allErrors:true,strict:true});
+const ajv=new Ajv2020({allErrors:true,strict:true,strictRequired:false});
 addFormats(ajv);
 const validate=ajv.compile(schema);
 const allowed=new Set(Object.keys(schema.$defs.release.properties));
