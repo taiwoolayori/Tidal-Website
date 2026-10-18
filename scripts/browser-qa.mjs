@@ -26,6 +26,14 @@ try {
       const r=await page.evaluate(()=>({scroll:document.documentElement.scrollWidth,client:document.documentElement.clientWidth,title:document.title,main:!!document.querySelector('main')}));
       if(r.scroll>r.client+3)failures.push(name+' '+file+' horizontal overflow '+r.scroll+'/'+r.client);
       if(!r.title||!r.main)failures.push(name+' '+file+' missing title/main');
+      if(file==='governance.html'||file==='foundation.html'){
+        const trigger=page.locator('[data-principle]').first();
+        await trigger.click();
+        const dialog=page.locator('dialog.principle-dialog[open]');
+        if(await dialog.count()!==1)failures.push(name+' '+file+' detail dialog failed to open');
+        await page.keyboard.press('Escape');
+        if(await page.locator('dialog.principle-dialog[open]').count())failures.push(name+' '+file+' detail dialog did not close');
+      }
       if(file==='media.html'){
         await page.waitForFunction(()=>!!window.TIDAL_PUBLIC_CONTENT);
         if(await page.locator('[data-tidal-media] a').count()) failures.push(name+' unapproved media link visible');
