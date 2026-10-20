@@ -6,6 +6,8 @@ const root=resolve(import.meta.dirname,'..'),destination=join(root,'dist-public'
 const allowedExtensions=new Set(['.html','.css','.js','.webp','.png','.jpg','.jpeg','.svg','.ico','.woff','.woff2','.txt','.xml','.webmanifest','.gif','.avif']);
 const allowedDirectories=new Set(['assets']);
 const forbiddenRootNames=new Set(['package.json','firebase.json','public-content-config.local.js']);
+const allowedRootTxt=new Set(['robots.txt','humans.txt']);
+const allowedRootXml=new Set(['sitemap.xml']);
 const files=[];
 function scan(dir,rel=''){
  for(const name of readdirSync(dir)){
@@ -20,6 +22,8 @@ function scan(dir,rel=''){
   if(!info.isFile())continue;
   if(rel===''&&forbiddenRootNames.has(name))continue;
   if(rel===''&&!allowedExtensions.has(extname(name).toLowerCase()))continue;
+  if(rel===''&&extname(name).toLowerCase()==='.txt'&&!allowedRootTxt.has(name))continue;
+  if(rel===''&&extname(name).toLowerCase()==='.xml'&&!allowedRootXml.has(name))continue;
   if(rel!==''&&!allowedExtensions.has(extname(name).toLowerCase()))continue;
   if(/(?:credentials|secret|token|private|internal|draft|backup)/i.test(name))throw Error('Sensitive filename in public assets: '+path);
   files.push({source:location,path});
@@ -28,6 +32,9 @@ function scan(dir,rel=''){
 scan(root);
 if(!files.some(x=>x.path==='index.html'))throw Error('Required index.html missing');
 if(files.some(x=>x.path.startsWith('tools/')||x.path.startsWith('docs/')))throw Error('Unexpected development content');
+for(const f of files){
+ if(f.path.endsWith('.js')&&/\b(?:firebase-admin|process\.env|serviceAccount|private_key)\b/.test(readFileSync(f.source,'utf8')))throw Error('Server-only JavaScript detected in public build: '+f.path);
+}
 rmSync(destination,{recursive:true,force:true});
 mkdirSync(destination,{recursive:true});
 for(const f of files){
