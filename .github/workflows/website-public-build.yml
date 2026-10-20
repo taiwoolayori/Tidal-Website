@@ -19,6 +19,8 @@ jobs:
         run: |
           node --check script.js
           node --check public-content-config.js
+      - name: Report business image reuse and outstanding hero approvals
+        run: node tools/audit-business-imagery.mjs
       - name: Build isolated public bundle
         run: node tools/build-public.mjs
       - name: Verify public brand and approved Contact substitution
