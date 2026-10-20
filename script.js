@@ -9,6 +9,13 @@ if(button&&nav){
 
   const closeMenu=()=>{
     nav.classList.remove('open');
+    nav.querySelectorAll('.nav-group.expanded').forEach(group=>{
+      group.classList.remove('expanded');
+      const submenu=group.querySelector('.nav-submenu');
+      const toggle=group.querySelector('.nav-subtoggle');
+      if(submenu)submenu.hidden=true;
+      if(toggle)toggle.setAttribute('aria-expanded','false');
+    });
     button.setAttribute('aria-expanded','false');
     button.setAttribute('aria-label','Open navigation');
   };
@@ -62,7 +69,18 @@ if(primaryNav){
   for(const [label,href] of options){const a=document.createElement('a');a.href=href;a.textContent=label;menu.append(a);}
   group.append(button,menu);
   const close=()=>{menu.hidden=true;button.setAttribute('aria-expanded','false');group.classList.remove('expanded');};
-  button.addEventListener('click',()=>{const next=menu.hidden;primaryNav.querySelectorAll('.nav-group.expanded .nav-subtoggle').forEach(b=>{if(b!==button)b.click();});menu.hidden=!next;button.setAttribute('aria-expanded',String(next));group.classList.toggle('expanded',next);});
+  button.addEventListener('click',()=>{
+    const next=menu.hidden;
+    primaryNav.querySelectorAll('.nav-group.expanded').forEach(other=>{
+      if(other===group)return;
+      other.classList.remove('expanded');
+      const otherMenu=other.querySelector('.nav-submenu');
+      const otherButton=other.querySelector('.nav-subtoggle');
+      if(otherMenu)otherMenu.hidden=true;
+      if(otherButton)otherButton.setAttribute('aria-expanded','false');
+    });
+    menu.hidden=!next;button.setAttribute('aria-expanded',String(next));group.classList.toggle('expanded',next);
+  });
   group.addEventListener('keydown',e=>{if(e.key==='Escape'&&!menu.hidden){close();button.focus();}});
   document.addEventListener('pointerdown',e=>{if(!group.contains(e.target))close();});
   primaryNav.addEventListener('click',e=>{if(e.target.closest('a'))close();});
