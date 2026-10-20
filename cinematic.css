@@ -66,3 +66,22 @@
 .cinematic-home .story-origin .hero-title-v2 span{padding-bottom:.05em}
 .cinematic-home .origin-company:focus-visible{outline:3px solid var(--gold2);outline-offset:3px}
 @media(max-width:700px){.cinematic-home .story-origin .hero-title-v2{line-height:1.13}}
+
+/* Responsive editorial layout review: keep hero, content grids and section anchors within viewport. */
+.cinematic-home .story-origin .hero-copy-v2{min-width:0}
+.cinematic-home .story-origin .hero-title-v2{overflow-wrap:normal;word-break:normal}
+.cinematic-home .origin-company-grid>.origin-company{min-width:0}
+.cinematic-home .origin-company img{aspect-ratio:16/10}
+@media(max-width:760px){
+ .cinematic-home .story-origin{min-height:calc(100svh - 72px)}
+ .cinematic-home .story-origin .home-v2-inner{min-height:0;padding-block:64px 68px}
+ .cinematic-home .hero-title-v2{font-size:clamp(2.8rem,11vw,4.5rem);line-height:1.13}
+ .cinematic-home .origin-company>div{padding:20px}
+ .cinematic-home .origin-journey,.cinematic-home .origin-progression{overflow-wrap:break-word}
+ .cinematic-home .hero-actions-v2{display:flex;flex-wrap:wrap;gap:10px}
+ .cinematic-home .hero-actions-v2 .btn{max-width:100%;white-space:normal}
+}
+@media(max-width:380px){
+ .cinematic-home .origin-progression-steps{grid-template-columns:1fr 1fr}
+ .cinematic-home .origin-progression-steps li{padding:16px 10px}
+}
