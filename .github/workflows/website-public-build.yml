@@ -56,3 +56,11 @@ jobs:
           test ! -d dist-public/tools
           test ! -d dist-public/docs
           test ! -d dist-public/.github
+      - name: Upload public-only release review bundle
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: tidal-website-release-preview
+          path: dist-public/
+          retention-days: 14
+          if-no-files-found: error
