@@ -11,3 +11,6 @@ Visual evidence source: GitHub Actions public-bundle validation run #48 (commit 
 **Responsive fix:** Mobile Contact heading typography has been adjusted in `lean.css` so “START A CONVERSATION.” does not split awkwardly at the 375 px target width. Screenshot recapture and review required.
 
 **Not authorized:** No production branch merge, Firebase deployment or final logo/crest redesign.
+
+## Approved temporary mitigation (Oct 20, 2026)
+Owner authorized using an existing architectural asset in place of obsolete seal artwork. Development CSS now references `assets/developments-bg-hq@2x.webp` for Contact. Both CI workflows passed at commit `ec1a277`. **Old-asset publication blocker is mitigated for Contact; updated image composition still needs visual owner acceptance.** The old asset remains in the repository and may still be used elsewhere, requiring separate inventory before publication.
