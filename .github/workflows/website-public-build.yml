@@ -21,6 +21,8 @@ jobs:
           node --check public-content-config.js
       - name: Build isolated public bundle
         run: node tools/build-public.mjs
+      - name: Verify public brand and approved Contact substitution
+        run: node tools/check-brand-release.mjs
       - name: Validate website references and release boundaries
         run: node tools/website-release-check.mjs
       - name: Validate publish inventory and internal links
