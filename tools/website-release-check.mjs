@@ -14,6 +14,13 @@ const home=read('index.html');
 if(!home.includes('Every legacy')||!home.includes('begins somewhere.'))errors.push('Approved homepage title absent');
 for(const path of requiredPages.filter(p=>existsSync(resolve(root,p)))){
  const html=read(path);
+ for(const match of html.matchAll(/(?:href|src)=[\"']([^\"']+)[\"']/g)){
+  const target=match[1];
+  if(/^(?:https?:|mailto:|tel:|data:|#|javascript:)/i.test(target))continue;
+  const clean=target.split(/[?#]/)[0];
+  if(!clean||clean.startsWith('/')||clean.includes('..'))continue;
+  if(!existsSync(resolve(root,clean)))errors.push('Missing local asset or link '+path+' -> '+clean);
+ }
  if(/(?:https?:\/\/)?(?:localhost|127\.0\.0\.1):\d+/i.test(html))errors.push('Local service address in '+path);
  if(/firebase-adminsdk|PRIVATE KEY-----|oauth-client\.local\.json/i.test(html))errors.push('Sensitive server configuration reference in '+path);
 }
