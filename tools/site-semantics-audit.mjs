@@ -7,6 +7,8 @@ if(!existsSync(dir))throw Error('Build dist-public first');
 const pages=readdirSync(dir).filter(p=>p.endsWith('.html'));
 const errors=[],warnings=[];
 let mailtos=0,fragments=0;
+const verifiedWorkspaceAddresses=new Set(['info','developments','agro','farms','careers','foundation','investments']);
+const futureAddresses=new Set(['foods','processing','supplychain','logistics','technology','infrastructure','media','hospitality','research','projects','partnerships','suppliers']);
 for(const page of pages){
  const html=readFileSync(join(dir,page),'utf8');
  const ids=new Set([...html.matchAll(/\bid=(["'])([^"']+)\1/g)].map(m=>m[2]));
