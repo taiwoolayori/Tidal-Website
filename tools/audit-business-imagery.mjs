@@ -7,6 +7,7 @@ const home=readFileSync(resolve(root,'index.html'),'utf8');
 const styles=readFileSync(resolve(root,'styles.css'),'utf8');
 const cards=[...home.matchAll(/<a class="origin-company"[^>]*>\s*<img\s+src="([^"]+)"[^>]*>\s*<div>\s*<span>([^<]+)<\/span>\s*<h3>([^<]+)<\/h3>/g)].map(m=>({image:m[1],status:m[2],business:m[3]}));
 const grouped={};
+const misleadingAgro=cards.find(x=>x.business==='Tidal Crest Agro'&&x.image==='assets/agro-bg-hq@2x.webp');
 for(const card of cards)(grouped[card.image]??=[]).push(card.business);
 const duplicated=Object.entries(grouped).filter(([,names])=>names.length>1).map(([image,businesses])=>({image,businesses}));
 const releaseReady=duplicated.length===0;
@@ -14,7 +15,8 @@ const approved={
  about:false,governance:false,agro:false
 };
 console.log(JSON.stringify({
- status:releaseReady?'DISTINCT_CARD_ASSETS':'IMAGE_REVIEW_REQUIRED',
+ status:releaseReady&&!misleadingAgro?'IMAGE_ACCEPTANCE_CANDIDATE':'IMAGE_REVIEW_REQUIRED',
+ misleadingAgroCattleReference:Boolean(misleadingAgro),
  unresolvedUniqueImageRequirement:!releaseReady,
  inspectedCards:cards.length,duplicated,
  heroFraming:'PER_PAGE_FOCAL_POINT_CANDIDATE_NOT_VISUALLY_ACCEPTED',
