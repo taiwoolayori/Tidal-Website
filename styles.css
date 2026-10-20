@@ -49,3 +49,20 @@
  .hero.foundation{--hero-focus:63% 32%}
  .hero.contact{--hero-focus:53% 36%}
 }
+
+/* Owner-review crop correction: safeguard complete important subjects on symbolic heroes.
+   Use an uncropped contain layer against the approved dark backdrop. */
+@media(min-width:761px){
+ .hero.about,.hero.governance{
+  background-color:#050403;
+  background-size:contain;
+  background-position:right center;
+ }
+}
+@media(max-width:760px){
+ .hero.about,.hero.governance{
+  background-color:#050403;
+  background-size:contain;
+  background-position:center top;
+ }
+}
