@@ -29,6 +29,12 @@ jobs:
         run: node tools/check-dynamic-navigation.mjs
       - name: Audit public page semantics and anchor destinations
         run: node tools/site-semantics-audit.mjs
+      - name: Install headless Chromium for browser smoke
+        run: |
+          npm install --no-save --ignore-scripts playwright@1.58.2
+          npx playwright install --with-deps chromium
+      - name: Test desktop tablet and mobile browser layouts
+        run: node tools/browser-smoke.mjs
       - name: Assert no private development files in publish directory
         run: |
           test -f dist-public/index.html
