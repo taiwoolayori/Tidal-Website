@@ -47,6 +47,8 @@ jobs:
           path: artifacts/website-visual-qa/
           retention-days: 14
           if-no-files-found: warn
+      - name: Summarize release-candidate acceptance gates
+        run: node tools/release-candidate-gate.mjs
       - name: Assert no private development files in publish directory
         run: |
           test -f dist-public/index.html
