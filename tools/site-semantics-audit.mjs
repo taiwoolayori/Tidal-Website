@@ -6,6 +6,7 @@ const dir=resolve(import.meta.dirname,'../dist-public');
 if(!existsSync(dir))throw Error('Build dist-public first');
 const pages=readdirSync(dir).filter(p=>p.endsWith('.html'));
 const errors=[],warnings=[];
+const idsByPage=new Map(pages.map(page=>[page,new Set([...readFileSync(join(dir,page),'utf8').matchAll(/\bid=([\"'])([^\"']+)\1/g)].map(m=>m[2]))]));
 let mailtos=0,fragments=0;
 const verifiedWorkspaceAddresses=new Set(['info','developments','agro','farms','careers','foundation','investments']);
 const futureAddresses=new Set(['foods','processing','supplychain','logistics','technology','infrastructure','media','hospitality','research','projects','partnerships','suppliers']);
@@ -24,7 +25,14 @@ for(const page of pages){
    if(!/^[a-z0-9._%+-]+@tidalcrestgroup\.com$/.test(address))warnings.push(page+': non-corporate email target');
    continue;
   }
-  if(!href.startsWith('#'))continue;
+  if(!href.startsWith('#')){
+   if(!/^(?:https?:|tel:|data:|javascript:)/i.test(href)&&href.includes('#')){
+    const [target,fragment]=href.split('#');
+    const targetPage=target.split('?')[0];
+    if(targetPage.endsWith('.html')&&idsByPage.has(targetPage)&&fragment&&!idsByPage.get(targetPage).has(decodeURIComponent(fragment)))warnings.push(page+': unresolved cross-page anchor '+href);
+   }
+   continue;
+  }
   const id=decodeURIComponent(href.slice(1));
   if(!id)continue;fragments++;
   if(!ids.has(id))warnings.push(page+': unresolved fragment #'+id);
