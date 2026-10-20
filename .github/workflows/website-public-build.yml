@@ -15,6 +15,10 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
+      - name: Validate website JavaScript syntax
+        run: |
+          node --check script.js
+          node --check public-content-config.js
       - name: Build isolated public bundle
         run: node tools/build-public.mjs
       - name: Validate website references and release boundaries
