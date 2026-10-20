@@ -35,6 +35,16 @@ jobs:
           npx playwright install --with-deps chromium
       - name: Test desktop tablet and mobile browser layouts
         run: node tools/browser-smoke.mjs
+      - name: Capture release-candidate visual review screenshots
+        run: node tools/capture-visual-qa.mjs
+      - name: Upload visual review evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: website-visual-qa
+          path: artifacts/website-visual-qa/
+          retention-days: 14
+          if-no-files-found: warn
       - name: Assert no private development files in publish directory
         run: |
           test -f dist-public/index.html
