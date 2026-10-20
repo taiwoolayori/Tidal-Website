@@ -19,6 +19,8 @@ jobs:
         run: node tools/build-public.mjs
       - name: Validate website references and release boundaries
         run: node tools/website-release-check.mjs
+      - name: Validate publish inventory and internal links
+        run: node tools/verify-public-bundle.mjs
       - name: Assert no private development files in publish directory
         run: |
           test -f dist-public/index.html
