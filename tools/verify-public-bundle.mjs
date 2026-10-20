@@ -13,6 +13,7 @@ function walk(folder,rel=''){
 if(!existsSync(root))throw Error('Run node tools/build-public.mjs before verifying bundle');
 walk(root);
 const fileSet=new Set(files);
+if(fileSet.has('assets/contact-bg-clean@2x.webp'))errors.push('Obsolete Contact hero image must not ship');
 for(const f of files){
  if(f.startsWith('.')||/(^|\/)(?:tools|docs|tests|\.github)\//.test(f))errors.push('Development artifact: '+f);
  if(/(?:\.env|\.md|\.mjs|\.map|\.json|\.yml|\.yaml|\.sh)$/i.test(f))errors.push('Unexpected public source artifact: '+f);
