@@ -91,3 +91,19 @@ body.dialog-open{overflow:hidden}
 .nav-submenu a{display:block!important;width:100%;padding:12px 4px;color:var(--ivory);font-size:.72rem;text-transform:none;letter-spacing:normal;white-space:normal}
 .nav-submenu a:hover,.nav-submenu a:focus-visible{color:var(--gold2)}
 @media(max-width:1200px){.nav-group{width:100%;flex-wrap:wrap;justify-content:space-between}.nav-group>a{width:auto!important;flex:1}.nav-submenu{position:static;width:100%;max-width:none;flex-basis:100%;box-shadow:none}.nav-submenu a{padding:12px 8px}}
+
+/* Responsive release pass: prevent long editorial copy and menus from exceeding viewport. */
+@media(max-width:760px){
+ .shell{width:min(100% - 32px,1540px)}
+ .brand{min-width:0;max-width:calc(100% - 92px)}
+ .brand-copy{min-width:0}
+ .brand-copy strong,.brand-copy span{overflow-wrap:anywhere}
+ .hero .shell{padding-block:64px 56px}
+ .title,.lead,.copy,.card,.journal-grid,.business-entry{min-width:0;overflow-wrap:break-word}
+ .nav-subtoggle{min-width:44px;min-height:44px}
+}
+@media(max-width:380px){
+ .brand img{width:42px;height:50px}
+ .brand-copy strong{font-size:clamp(.92rem,4.7vw,1.2rem)}
+ .brand-copy span{font-size:.52rem;letter-spacing:.1em}
+}
