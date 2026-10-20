@@ -31,3 +31,21 @@
  html{scroll-behavior:auto}
  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
 }
+
+/* Owner visual review 2026-10-20: art-directed heroes instead of one-size-fits-all center crop.
+   These adjustments preserve the editorial palette; subject-complete artwork still needs approval. */
+.hero{background-repeat:no-repeat;background-position:var(--hero-focus,center center)}
+.hero.about{--hero-focus:68% 31%}
+.hero.governance{--hero-focus:70% 38%}
+.hero.agro{--hero-focus:60% 44%}
+.hero.developments{--hero-focus:63% 48%}
+.hero.foundation{--hero-focus:61% 38%}
+.hero.contact{--hero-focus:57% 44%}
+@media(max-width:760px){
+ .hero.about{--hero-focus:68% 26%}
+ .hero.governance{--hero-focus:67% 27%}
+ .hero.agro{--hero-focus:66% 45%}
+ .hero.developments{--hero-focus:59% 42%}
+ .hero.foundation{--hero-focus:63% 32%}
+ .hero.contact{--hero-focus:53% 36%}
+}
