@@ -1,0 +1,68 @@
+name: Website public-bundle validation
+on:
+  push:
+    branches: [website-modernization-2026]
+  pull_request:
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  public-build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Validate website JavaScript syntax
+        run: |
+          node --check script.js
+          node --check public-content-config.js
+      - name: Report business image reuse and outstanding hero approvals
+        run: node tools/audit-business-imagery.mjs
+      - name: Build isolated public bundle
+        run: node tools/build-public.mjs
+      - name: Verify public brand and approved Contact substitution
+        run: node tools/check-brand-release.mjs
+      - name: Validate website references and release boundaries
+        run: node tools/website-release-check.mjs
+      - name: Validate publish inventory and internal links
+        run: node tools/verify-public-bundle.mjs
+      - name: Validate dynamically generated site navigation
+        run: node tools/check-dynamic-navigation.mjs
+      - name: Audit public page semantics and anchor destinations
+        run: node tools/site-semantics-audit.mjs
+      - name: Install headless Chromium for browser smoke
+        run: |
+          npm install --no-save --ignore-scripts playwright@1.58.2
+          npx playwright install --with-deps chromium
+      - name: Test desktop tablet and mobile browser layouts
+        run: node tools/browser-smoke.mjs
+      - name: Capture release-candidate visual review screenshots
+        run: node tools/capture-visual-qa.mjs
+      - name: Upload visual review evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: website-visual-qa
+          path: artifacts/website-visual-qa/
+          retention-days: 14
+          if-no-files-found: warn
+      - name: Summarize release-candidate acceptance gates
+        run: node tools/release-candidate-gate.mjs
+      - name: Assert no private development files in publish directory
+        run: |
+          test -f dist-public/index.html
+          test ! -e dist-public/firebase.json
+          test ! -d dist-public/tools
+          test ! -d dist-public/docs
+          test ! -d dist-public/.github
+      - name: Upload public-only release review bundle
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: tidal-website-release-preview
+          path: dist-public/
+          retention-days: 14
+          if-no-files-found: error

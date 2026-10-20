@@ -34,7 +34,7 @@
 body.dialog-open{overflow:hidden}
 
 @media(max-width:1100px){.group-experience{grid-template-columns:1fr;gap:34px}}
-@media(max-width:900px){
+@media(max-width:1200px){
   .nav{max-height:calc(100vh - 78px);overflow:auto;gap:0;padding:10px 24px 20px}
   .nav a{width:100%;padding:14px 0;font-size:.78rem}
   .nav .connect{width:auto;padding:12px 16px;margin-top:6px}
@@ -63,3 +63,61 @@ body.dialog-open{overflow:hidden}
   html{scroll-behavior:auto}
   *,*::before,*::after{scroll-behavior:auto!important;transition:none!important;animation:none!important}
 }
+
+/* Business directory: extends the approved editorial design */
+.business-directory{max-width:1200px}.directory-heading{font:600 clamp(1.7rem,3.4vw,3.2rem)/1.14 'Cinzel',Georgia,serif;color:var(--ivory);margin:14px 0}.directory-intro{max-width:760px}.business-list{display:grid;gap:0;margin-top:30px;border-top:1px solid var(--line)}.business-entry{display:flex;justify-content:space-between;align-items:center;gap:34px;padding:34px 0;border-bottom:1px solid var(--line)}.business-entry h3,.directory-foundation h2{font:600 clamp(1.3rem,2.25vw,2rem)/1.2 'Cinzel',Georgia,serif;color:var(--gold2);margin:12px 0}.business-entry .copy{max-width:720px;margin:0}.business-entry .btn{flex-shrink:0;margin:0}.directory-next{margin-top:94px}.capability-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px;margin-top:28px}.capability-grid article{padding:24px 0;border-top:1px solid var(--line)}.capability-grid h3{color:var(--gold2);font:600 1.25rem/1.25 'Cinzel',Georgia,serif;margin:0 0 12px}.capability-grid p{color:var(--muted);font-weight:300;line-height:1.8;margin:0}.directory-foundation{display:flex;align-items:center;justify-content:space-between;gap:36px;margin-top:68px;padding:32px;border:1px solid var(--line);background:#100e0b}.directory-foundation p{max-width:680px}.directory-foundation .btn{flex-shrink:0;margin:0}.directory-end{display:flex;flex-wrap:wrap;gap:16px;margin-top:36px}@media(max-width:760px){.business-entry,.directory-foundation{display:block}.business-entry .btn,.directory-foundation .btn{margin-top:20px}.capability-grid{grid-template-columns:1fr}.directory-next{margin-top:62px}.directory-foundation{padding:24px}}
+
+/* Farm section journals */
+.journal-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:26px}.journal-grid .card{min-height:210px}.journal-subheading{font:600 1.35rem/1.25 'Cinzel',Georgia,serif;color:var(--gold2);margin:14px 0}.journal-link{display:inline-block;margin-top:12px;color:var(--gold2);font-size:.78rem;line-height:1.5;text-decoration:underline;text-underline-offset:4px}@media(max-width:760px){.journal-grid{grid-template-columns:1fr}}
+
+/* Prevent long contact email links from forcing mobile horizontal overflow. */
+.contact-grid{min-width:0}.contact-grid .card{min-width:0}.contact-grid .btn{max-width:100%;white-space:normal;overflow-wrap:anywhere;word-break:break-word}
+
+/* Shared navigation to public editorial and participation destinations. */
+.footer-destinations{display:flex;justify-content:center;flex-wrap:wrap;gap:10px 18px;margin-top:16px;padding-top:16px;border-top:1px solid rgba(201,168,95,.22)}
+.footer-destinations a{color:#ddd3c2;font-size:.71rem;line-height:1.5;letter-spacing:normal;text-transform:none;text-decoration:underline;text-underline-offset:4px}
+.footer-destinations a:hover,.footer-destinations a[aria-current="page"]{color:var(--gold2)}
+@media(max-width:900px){.footer-destinations{justify-content:flex-start}}
+
+/* Future approved social channels and Tidal Crest Media releases */
+.tidal-social{display:flex;flex-wrap:wrap;gap:12px 18px;margin:22px 0}.tidal-social a{color:var(--gold2);text-decoration:underline;text-underline-offset:4px}.tidal-social h3{font:600 1.1rem 'Cinzel',Georgia,serif;width:100%;margin:0}.tidal-media-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;margin-top:24px}.tidal-release{min-width:0}.tidal-release p{color:var(--muted);line-height:1.7}.tidal-release a{color:var(--gold2)}.tidal-release button{display:block;border:1px solid var(--gold);background:transparent;color:var(--gold2);padding:10px 16px;margin-top:16px;cursor:pointer}.tidal-release iframe{margin-top:16px;width:100%;aspect-ratio:16/9;border:0}@media(max-width:700px){.tidal-media-grid{grid-template-columns:1fr}}
+
+/* Accessible nested site directories, keeping existing page destinations. */
+.nav-group{position:relative;display:flex;align-items:center;gap:4px}
+.nav-subtoggle{background:none;color:var(--gold2);border:0;cursor:pointer;padding:8px;font-size:1.05rem;line-height:1}
+.nav-subtoggle:focus-visible{outline:2px solid var(--gold2);outline-offset:2px}
+.nav-submenu{position:absolute;top:100%;left:0;z-index:1100;min-width:240px;max-width:min(360px,90vw);padding:12px 16px;background:#0e0c09;border:1px solid var(--gold);box-shadow:0 16px 32px rgba(0,0,0,.5)}
+.nav-submenu[hidden]{display:none!important}
+.nav-submenu a{display:block!important;width:100%;padding:12px 4px;color:var(--ivory);font-size:.72rem;text-transform:none;letter-spacing:normal;white-space:normal}
+.nav-submenu a:hover,.nav-submenu a:focus-visible{color:var(--gold2)}
+@media(max-width:1200px){.nav-group{width:100%;flex-wrap:wrap;justify-content:space-between}.nav-group>a{width:auto!important;flex:1}.nav-submenu{position:static;width:100%;max-width:none;flex-basis:100%;box-shadow:none}.nav-submenu a{padding:12px 8px}}
+
+/* Responsive release pass: prevent long editorial copy and menus from exceeding viewport. */
+@media(max-width:760px){
+ .shell{width:min(100% - 32px,1540px)}
+ .brand{min-width:0;max-width:calc(100% - 92px)}
+ .brand-copy{min-width:0}
+ .brand-copy strong,.brand-copy span{overflow-wrap:anywhere}
+ .hero .shell{padding-block:64px 56px}
+ .title,.lead,.copy,.card,.journal-grid,.business-entry{min-width:0;overflow-wrap:break-word}
+ .nav-subtoggle{min-width:44px;min-height:44px}
+}
+@media(max-width:380px){
+ .brand img{width:42px;height:50px}
+ .brand-copy strong{font-size:clamp(.92rem,4.7vw,1.2rem)}
+ .brand-copy span{font-size:.52rem;letter-spacing:.1em}
+}
+
+/* Contact hero: keep the main editorial headline readable on small screens. */
+@media(max-width:760px){
+ .hero.contact .title{font-size:clamp(2.15rem,9.5vw,3.6rem);line-height:1.12;max-width:100%;overflow-wrap:normal;word-break:normal}
+ .hero.contact .lead{position:relative;max-width:34rem}
+ .hero.contact::before{background:linear-gradient(90deg,rgba(6,5,4,.96),rgba(6,5,4,.77) 65%,rgba(6,5,4,.64))}
+}
+@media(max-width:380px){
+ .hero.contact .title{font-size:clamp(2rem,9.1vw,2.7rem);letter-spacing:-.025em}
+}
+
+/* Visual QA correction: ensure the long Contact heading fits 375px Safari-sized viewport. */
+@media(max-width:760px){.hero.contact .title{font-size:clamp(1.85rem,7.65vw,3rem);letter-spacing:-.025em;overflow-wrap:normal}}
+@media(max-width:380px){.hero.contact .title{font-size:clamp(1.8rem,7.4vw,2.05rem);letter-spacing:-.035em}}

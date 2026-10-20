@@ -1,0 +1,236 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://tidalcrestgroup.com/contracts/publication-manifest/0.2.0-draft",
+  "title": "Tidal Crest Public Publication Manifest v0.2 Draft",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "generated_at",
+    "releases"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "0.2.0-draft"
+    },
+    "generated_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "releases": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/release"
+      }
+    }
+  },
+  "$defs": {
+    "release": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "publication_id",
+        "kind",
+        "title",
+        "summary",
+        "revision",
+        "status",
+        "published_at",
+        "rights_cleared",
+        "privacy_cleared",
+        "facts_verified",
+        "authorization_confirmed"
+      ],
+      "properties": {
+        "publication_id": {
+          "type": "string",
+          "pattern": "^pub_[a-z0-9_-]{4,64}$"
+        },
+        "kind": {
+          "enum": [
+            "entity",
+            "project-update",
+            "farm-journal",
+            "media",
+            "challenge",
+            "foundation",
+            "research"
+          ]
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 150
+        },
+        "summary": {
+          "type": "string",
+          "maxLength": 1500
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "status": {
+          "const": "published"
+        },
+        "published_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "rights_cleared": {
+          "const": true
+        },
+        "privacy_cleared": {
+          "const": true
+        },
+        "facts_verified": {
+          "const": true
+        },
+        "authorization_confirmed": {
+          "const": true
+        },
+        "public_entity_ref": {
+          "type": "string",
+          "pattern": "^public_[a-z0-9-]+$"
+        },
+        "public_project_ref": {
+          "type": "string",
+          "pattern": "^public_[a-z0-9-]+$"
+        },
+        "chapter": {
+          "enum": [
+            "Vision",
+            "Design",
+            "Challenge",
+            "Build",
+            "Operations",
+            "Lessons"
+          ]
+        },
+        "media": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "public_url",
+              "alt"
+            ],
+            "properties": {
+              "public_url": {
+                "type": "string",
+                "pattern": "^https://(?:tidalcrestgroup\\.com|media\\.tidalcrestgroup\\.com)/[^\\s]*$"
+              },
+              "alt": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        },
+        "approved_status_label": {
+          "type": "string",
+          "maxLength": 100
+        },
+        "public_research_ref": {
+          "type": "string",
+          "pattern": "^public_[a-z0-9-]{4,64}$"
+        },
+        "research_output_type": {
+          "enum": [
+            "working-paper",
+            "technical-note",
+            "field-report",
+            "scholarly-article",
+            "conference-paper",
+            "research-brief",
+            "dataset",
+            "institutional-report"
+          ]
+        },
+        "review_label": {
+          "enum": [
+            "not-peer-reviewed",
+            "internal-technical-review",
+            "independently-peer-reviewed"
+          ]
+        },
+        "authors": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 120
+          }
+        },
+        "citation": {
+          "type": "string",
+          "maxLength": 600
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "entity"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "public_entity_ref"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "project-update"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "public_project_ref"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "farm-journal"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "public_project_ref",
+              "chapter"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "research"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "public_research_ref",
+              "research_output_type",
+              "review_label",
+              "authors"
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

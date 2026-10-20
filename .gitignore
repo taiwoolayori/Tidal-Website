@@ -1,1 +1,4 @@
 .firebase/
+staging-public/
+dist-public/
+artifacts/

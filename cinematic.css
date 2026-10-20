@@ -17,3 +17,71 @@
 @media(max-width:1000px){.home-v2-inner,.thesis-grid,.governance-grid-v2{grid-template-columns:1fr}.crest-stage{min-height:330px}.hero-crest-v2{width:min(280px,54vw)}.thesis-points{grid-template-columns:1fr}.value-rail{grid-template-columns:repeat(2,1fr)}.value-step:nth-child(2){border-right:0}.value-step:nth-child(-n+2){border-bottom:1px solid rgba(201,168,95,.18)}}
 @media(max-width:700px){.cinematic-home .home-v2{min-height:auto}.home-v2-inner{padding:68px 0 86px;gap:28px}.hero-title-v2{font-size:clamp(2.8rem,13vw,4.3rem)}.hero-intro-v2{font-size:.95rem}.crest-stage{min-height:230px;order:-1}.hero-crest-v2{width:min(190px,48vw)}.crest-orbit{width:68%}.scroll-cue{display:none}.story-section{padding:78px 0}.section-title-v2{font-size:clamp(2.1rem,10vw,3.4rem)}.group-panel{min-height:420px}.group-panel-content{padding:28px;display:block}.group-panel-arrow{margin-top:20px}.value-rail{grid-template-columns:1fr}.value-step{border-right:0;border-bottom:1px solid rgba(201,168,95,.18)}.value-step:last-child{border-bottom:0}.horizon{min-height:70vh;background-attachment:scroll}.horizon-line{font-size:clamp(2.3rem,11vw,4rem)}.closing-v2{padding:80px 0 70px}}
 @media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none}.group-panel::before,.hero-crest-v2{transition:none!important}.horizon{background-attachment:scroll}}
+
+/* Enterprise expansion — additive, approved website modernization branch */
+.emerging-enterprises{background:linear-gradient(155deg,#0b0a08,#17130e 55%,#0b0a08)}
+.emerging-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:38px}
+.emerging-card{border:1px solid rgba(201,168,95,.26);background:linear-gradient(130deg,rgba(201,168,95,.075),rgba(0,0,0,.12));padding:30px;min-width:0}
+.emerging-card .mini-label{color:var(--gold2);letter-spacing:.14em;text-transform:uppercase;font-size:.7rem}
+.emerging-card h3{font:500 clamp(1.35rem,2vw,2rem)/1.22 'Cinzel',Georgia,serif;color:#f0e6d2;margin:16px 0 12px}
+.emerging-card p,.emerging-cta p{color:#c7beb0;line-height:1.75;margin:0}
+.emerging-cta{display:flex;gap:24px;align-items:center;justify-content:space-between;margin-top:30px;flex-wrap:wrap}
+@media(max-width:700px){.emerging-grid{grid-template-columns:1fr}.emerging-card{padding:23px}}
+
+
+/* Approved origin story homepage, additive to the preserved cinematic identity. */
+.cinematic-home{font-family:Inter,Arial,sans-serif}
+.cinematic-home .story-origin{min-height:calc(100svh - 88px)}
+.cinematic-home .story-origin::before{background:linear-gradient(90deg,rgba(5,5,4,.93) 0%,rgba(5,5,4,.69) 55%,rgba(5,5,4,.39) 100%),url('assets/home-bg-hq@2x.webp') center/cover no-repeat}
+.cinematic-home .hero-title-v2,.cinematic-home .section-title-v2,.cinematic-home .closing-v2 h2{font-family:'Cormorant Garamond',Georgia,serif;text-transform:none;letter-spacing:0}
+.cinematic-home .hero-title-v2{font-size:clamp(3.4rem,7vw,7.2rem);line-height:.98;max-width:1000px}
+.cinematic-home .section-title-v2{font-size:clamp(2.5rem,5vw,5rem);line-height:1.04;max-width:900px}
+.cinematic-home .section-copy{max-width:760px}
+.cinematic-home .story-origin .home-v2-inner{grid-template-columns:1fr!important;min-width:0}
+.cinematic-home .origin-company-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin-top:35px}
+.cinematic-home .origin-company{color:inherit;text-decoration:none;display:block;border:1px solid rgba(201,168,95,.23);min-width:0;background:#100e0a}
+.cinematic-home .origin-company img{width:100%;height:230px;object-fit:cover}
+.cinematic-home .origin-company>div{padding:25px}
+.cinematic-home .origin-company span,.cinematic-home .origin-capabilities span{color:var(--gold2);text-transform:uppercase;font-size:.68rem;letter-spacing:.16em}
+.cinematic-home .origin-company h3,.cinematic-home .origin-capabilities h3{font:600 clamp(1.7rem,2.5vw,2.3rem)/1.1 'Cormorant Garamond',Georgia,serif;margin:12px 0}
+.cinematic-home .origin-company p,.cinematic-home .origin-capabilities p{color:#c7beb0;line-height:1.7}
+.cinematic-home .origin-company strong{display:block;color:var(--gold2);font-size:.76rem;margin-top:24px}
+.cinematic-home .origin-capabilities{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;margin:40px 0 16px}
+.cinematic-home .origin-capabilities article{min-width:0;border-top:1px solid rgba(201,168,95,.4);padding:24px 4px}
+.cinematic-home .origin-journey{background:linear-gradient(90deg,rgba(5,5,4,.92),rgba(5,5,4,.60)),url('assets/group-bg-hq@2x.webp') center/cover;color:#f3eee3}
+.cinematic-home .origin-journey .section-copy{color:#e0d8ca}
+.cinematic-home .closing-v2 h2{font-size:clamp(2.8rem,5vw,5rem)}
+@media(max-width:1000px){.cinematic-home .origin-company-grid,.cinematic-home .origin-capabilities{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:700px){.cinematic-home .origin-company-grid,.cinematic-home .origin-capabilities{grid-template-columns:1fr}.cinematic-home .hero-title-v2{font-size:clamp(3rem,12vw,4.5rem)}.cinematic-home .origin-company img{height:205px}}
+
+/* A concise, accessible visual link between established activities and long-term ambition. */
+.cinematic-home .origin-progression{padding:82px 0;background:#100e0a;border-block:1px solid rgba(201,168,95,.22)}
+.cinematic-home .origin-progression-steps{list-style:none;counter-reset:steps;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;padding:0;margin:32px 0 0;background:rgba(201,168,95,.19);border:1px solid rgba(201,168,95,.19)}
+.cinematic-home .origin-progression-steps li{counter-increment:steps;background:#100e0a;padding:22px 14px;min-width:0;font:600 clamp(1.3rem,2vw,1.95rem)/1.08 'Cormorant Garamond',Georgia,serif}
+.cinematic-home .origin-progression-steps li::before{content:counter(steps,decimal-leading-zero);display:block;font:500 .65rem/1.5 Inter,Arial,sans-serif;color:var(--gold2);letter-spacing:.12em;margin-bottom:9px}
+@media(max-width:700px){.cinematic-home .origin-progression{padding:62px 0}.cinematic-home .origin-progression-steps{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+/* Protect Cormorant descenders and keep the origin hero legible. */
+.cinematic-home .story-origin .hero-title-v2{line-height:1.12;padding-bottom:.1em;overflow:visible}
+.cinematic-home .story-origin .hero-title-v2 span{padding-bottom:.05em}
+.cinematic-home .origin-company:focus-visible{outline:3px solid var(--gold2);outline-offset:3px}
+@media(max-width:700px){.cinematic-home .story-origin .hero-title-v2{line-height:1.13}}
+
+/* Responsive editorial layout review: keep hero, content grids and section anchors within viewport. */
+.cinematic-home .story-origin .hero-copy-v2{min-width:0}
+.cinematic-home .story-origin .hero-title-v2{overflow-wrap:normal;word-break:normal}
+.cinematic-home .origin-company-grid>.origin-company{min-width:0}
+.cinematic-home .origin-company img{aspect-ratio:16/10}
+@media(max-width:760px){
+ .cinematic-home .story-origin{min-height:calc(100svh - 72px)}
+ .cinematic-home .story-origin .home-v2-inner{min-height:0;padding-block:64px 68px}
+ .cinematic-home .hero-title-v2{font-size:clamp(2.8rem,11vw,4.5rem);line-height:1.13}
+ .cinematic-home .origin-company>div{padding:20px}
+ .cinematic-home .origin-journey,.cinematic-home .origin-progression{overflow-wrap:break-word}
+ .cinematic-home .hero-actions-v2{display:flex;flex-wrap:wrap;gap:10px}
+ .cinematic-home .hero-actions-v2 .btn{max-width:100%;white-space:normal}
+}
+@media(max-width:380px){
+ .cinematic-home .origin-progression-steps{grid-template-columns:1fr 1fr}
+ .cinematic-home .origin-progression-steps li{padding:16px 10px}
+}
