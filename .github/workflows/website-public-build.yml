@@ -21,6 +21,8 @@ jobs:
         run: node tools/website-release-check.mjs
       - name: Validate publish inventory and internal links
         run: node tools/verify-public-bundle.mjs
+      - name: Audit public page semantics and anchor destinations
+        run: node tools/site-semantics-audit.mjs
       - name: Assert no private development files in publish directory
         run: |
           test -f dist-public/index.html
