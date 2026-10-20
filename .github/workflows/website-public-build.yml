@@ -1,0 +1,28 @@
+name: Website public-bundle validation
+on:
+  push:
+    branches: [website-modernization-2026]
+  pull_request:
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  public-build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Build isolated public bundle
+        run: node tools/build-public.mjs
+      - name: Validate website references and release boundaries
+        run: node tools/website-release-check.mjs
+      - name: Assert no private development files in publish directory
+        run: |
+          test -f dist-public/index.html
+          test ! -e dist-public/firebase.json
+          test ! -d dist-public/tools
+          test ! -d dist-public/docs
+          test ! -d dist-public/.github
