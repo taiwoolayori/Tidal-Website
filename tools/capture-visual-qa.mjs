@@ -29,6 +29,9 @@ try{
    const name=path.replace('.html','')+'-'+size+'.png';
    await page.screenshot({path:join(output,name),fullPage:true,animations:'disabled'});
    results.push({page:path,viewport:size,width,height,screenshot:name});
+   const heroName=path.replace('.html','')+'-'+size+'-first-screen.png';
+   await page.screenshot({path:join(output,heroName),fullPage:false,animations:'disabled'});
+   results.push({page:path,viewport:size,width,height,screenshot:heroName,region:'first-screen'});
   }
   await page.close();
  }
