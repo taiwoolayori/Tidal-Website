@@ -5,7 +5,7 @@ import {join,resolve,extname,relative,sep} from 'node:path';
 const root=resolve(import.meta.dirname,'..'),destination=join(root,'dist-public');
 const allowedExtensions=new Set(['.html','.css','.js','.webp','.png','.jpg','.jpeg','.svg','.ico','.woff','.woff2','.txt','.xml','.webmanifest','.gif','.avif']);
 const allowedDirectories=new Set(['assets']);
-const forbiddenRootNames=new Set(['package.json','firebase.json','public-content-config.local.js']);
+const forbiddenRootNames=new Set(['package.json','firebase.json','public-content-config.local.js','olayori-central.html']);
 // Obsolete branded artwork is deliberately excluded from any public release bundle.
 const forbiddenPublicAssets=new Set(['assets/contact-bg-clean@2x.webp']);
 const allowedRootTxt=new Set(['robots.txt','humans.txt']);
