@@ -6,6 +6,8 @@ const root=resolve(import.meta.dirname,'..'),destination=join(root,'dist-public'
 const allowedExtensions=new Set(['.html','.css','.js','.webp','.png','.jpg','.jpeg','.svg','.ico','.woff','.woff2','.txt','.xml','.webmanifest','.gif','.avif']);
 const allowedDirectories=new Set(['assets']);
 const forbiddenRootNames=new Set(['package.json','firebase.json','public-content-config.local.js']);
+// Obsolete branded artwork is deliberately excluded from any public release bundle.
+const forbiddenPublicAssets=new Set(['assets/contact-bg-clean@2x.webp']);
 const allowedRootTxt=new Set(['robots.txt','humans.txt']);
 const allowedRootXml=new Set(['sitemap.xml']);
 const files=[];
@@ -20,6 +22,7 @@ function scan(dir,rel=''){
    continue;
   }
   if(!info.isFile())continue;
+  if(forbiddenPublicAssets.has(path))continue;
   if(rel===''&&forbiddenRootNames.has(name))continue;
   if(rel===''&&!allowedExtensions.has(extname(name).toLowerCase()))continue;
   if(rel===''&&extname(name).toLowerCase()==='.txt'&&!allowedRootTxt.has(name))continue;
