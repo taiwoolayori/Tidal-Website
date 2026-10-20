@@ -57,6 +57,7 @@ if(primaryNav){
   'farms.html':[['Estate Journey','farms.html#the-journey'],['Poultry','farm-poultry.html'],['Livestock','farm-livestock.html'],['Aquaculture','farm-aquaculture.html'],['Crops and Orchards','farm-crops.html'],['Resources','farm-resources.html'],['Learning and Research','farm-learning.html']],
   'group.html':[['Projects and Innovation','projects.html'],['Project Calls and Announcements','opportunities.html'],['Research Publications','publications.html'],['Media and Journal','media.html'],['Work With Us','work-with-us.html']]
  };
+ let submenuNumber=0;
  for(const link of [...primaryNav.querySelectorAll(':scope > a')]){
   const options=groups[link.getAttribute('href')];
   if(!options)continue;
@@ -66,8 +67,12 @@ if(primaryNav){
   button.setAttribute('aria-label','Show '+link.textContent+' pages');
   button.setAttribute('aria-expanded','false');button.textContent='⌄';
   const menu=document.createElement('div');menu.className='nav-submenu';menu.hidden=true;
+  menu.id='primary-submenu-'+(++submenuNumber);
+  button.setAttribute('aria-controls',menu.id);
+  button.setAttribute('aria-haspopup','true');
   for(const [label,href] of options){const a=document.createElement('a');a.href=href;a.textContent=label;menu.append(a);}
   group.append(button,menu);
+  if(link.getAttribute('href')===location.pathname.split('/').pop())link.setAttribute('aria-current','page');
   const close=()=>{menu.hidden=true;button.setAttribute('aria-expanded','false');group.classList.remove('expanded');};
   button.addEventListener('click',()=>{
     const next=menu.hidden;
