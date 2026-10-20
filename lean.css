@@ -107,3 +107,13 @@ body.dialog-open{overflow:hidden}
  .brand-copy strong{font-size:clamp(.92rem,4.7vw,1.2rem)}
  .brand-copy span{font-size:.52rem;letter-spacing:.1em}
 }
+
+/* Contact hero: keep the main editorial headline readable on small screens. */
+@media(max-width:760px){
+ .hero.contact .title{font-size:clamp(2.15rem,9.5vw,3.6rem);line-height:1.12;max-width:100%;overflow-wrap:normal;word-break:normal}
+ .hero.contact .lead{position:relative;max-width:34rem}
+ .hero.contact::before{background:linear-gradient(90deg,rgba(6,5,4,.96),rgba(6,5,4,.77) 65%,rgba(6,5,4,.64))}
+}
+@media(max-width:380px){
+ .hero.contact .title{font-size:clamp(2rem,9.1vw,2.7rem);letter-spacing:-.025em}
+}
